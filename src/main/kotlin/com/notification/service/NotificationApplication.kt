@@ -12,17 +12,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 
-class TwilioConfiguration : Configuration() {
-    @JsonProperty("twilio")
-    lateinit var twilioSettings: TwilioSettings
-}
+class TwilioConfiguration : Configuration()
 
 data class TwilioSettings(
-    @JsonProperty("accountSid")
-    val accountSid: String = "",
-
-    @JsonProperty("authToken")
-    val authToken: String = ""
+    val accountSid: String = System.getenv("TWILIO_ACCOUNT_SID") ?: "",
+    val authToken: String = System.getenv("TWILIO_AUTH_TOKEN") ?: ""
 )
 
 class NotificationApplication : Application<TwilioConfiguration>() {
@@ -46,9 +40,10 @@ class NotificationApplication : Application<TwilioConfiguration>() {
 
     override fun run(configuration: TwilioConfiguration, environment: Environment) {
         logger.info("Starting Notification Service")
-        logger.debug("Twilio Settings: ${configuration.twilioSettings}")
+        val twilioSettings = TwilioSettings()
+        logger.debug("Twilio Settings: $twilioSettings")
         logger.debug("Initializing Twilio Service")
-        val twilioService = TwilioService(configuration.twilioSettings)
+        val twilioService = TwilioService(twilioSettings)
         logger.debug("Initializing Twilio Notification Repository")
         val twilioNotificationRepository = TwilioNotificationRepository(twilioService)
         logger.debug("Initializing Notification Resource")
