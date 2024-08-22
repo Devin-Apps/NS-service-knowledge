@@ -2,7 +2,7 @@ name: Continuous Deployment
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
 
 env:
   AWS_REGION: us-east-1
