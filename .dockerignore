@@ -1,0 +1,36 @@
+# Ignore Maven build directory
+target/
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+.vscode/
+
+# Ignore Git directory
+.git/
+
+# Ignore logs
+*.log
+
+# Ignore temporary files
+*.tmp
+
+# Ignore environment files
+.env
+
+# Ignore any local configuration files
+config.local.yml
+
+# Ignore test files
+src/test/
+
+# Ignore documentation
+README.md
+docs/
+
+# Ignore Docker-related files (we don't want to copy these into the image)
+Dockerfile
+docker-compose.yml
+
+# Ensure config.yml is included
+!config.yml
